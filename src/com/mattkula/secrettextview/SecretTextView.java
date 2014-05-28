@@ -70,6 +70,10 @@ public class SecretTextView extends TextView {
         resetSpannableString(isVisible == true ? 2.0f : 0.0f);
     }
 
+    public boolean getIsVisible(){
+        return mIsVisible;
+    }
+
     private void resetSpannableString(double percent){
         mSpannableString = new SpannableString(this.mTextString);
         int color = getCurrentTextColor();
