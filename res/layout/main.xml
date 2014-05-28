@@ -20,7 +20,7 @@
             android:layout_centerInParent="true"
             android:text="This is a demo of Matt Kula's Secret TextView"
             android:textSize="30sp"
-            android:textColor="@android:color/holo_orange_dark"
+            android:textColor="@android:color/black"
             />
 </RelativeLayout>
 
