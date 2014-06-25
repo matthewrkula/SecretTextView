@@ -18,7 +18,7 @@ public class SecretTextView extends TextView {
 
     private double[] mAlphas;
     private boolean mIsVisible;
-    private boolean mIsReset = false;
+    private boolean mIsTextResetting = false;
     private int mDuration = 2500;
 
     ValueAnimator animator;
@@ -75,15 +75,19 @@ public class SecretTextView extends TextView {
     }
 
     private void resetSpannableString(double percent){
+    	mIsTextResetting = true;
+    	
         mSpannableString = new SpannableString(this.mTextString);
         int color = getCurrentTextColor();
         for(int i=0; i < mSpannableString.length(); i++){
             mSpannableString.setSpan(
                     new ForegroundColorSpan(Color.argb(clamp(mAlphas[i] + percent), Color.red(color), Color.green(color), Color.blue(color))), i, i+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
-        mIsReset = true;
+
         setText(mSpannableString);
         invalidate();
+        
+        mIsTextResetting = false;
     }
 
     private void resetAlphas(int length){
@@ -94,11 +98,10 @@ public class SecretTextView extends TextView {
     }
 
     private void resetIfNeeded(){
-        if (!mIsReset){
+        if (!mIsTextResetting){
             mTextString = getText().toString();
             resetAlphas(mTextString.length());
-            resetSpannableString(0);
-            mIsReset = false;
+            resetSpannableString(mIsVisible ? 2.0f : 0);
         }
     }
 
