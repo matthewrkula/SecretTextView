@@ -77,7 +77,6 @@ public class SecretTextView extends TextView {
     private void resetSpannableString(double percent){
     	mIsTextResetting = true;
     	
-        mSpannableString = new SpannableString(this.mTextString);
         int color = getCurrentTextColor();
         for(int i=0; i < mSpannableString.length(); i++){
             mSpannableString.setSpan(
@@ -100,6 +99,7 @@ public class SecretTextView extends TextView {
     private void resetIfNeeded(){
         if (!mIsTextResetting){
             mTextString = getText().toString();
+            mSpannableString = new SpannableString(this.mTextString);
             resetAlphas(mTextString.length());
             resetSpannableString(mIsVisible ? 2.0f : 0);
         }
@@ -120,7 +120,7 @@ public class SecretTextView extends TextView {
         return (int)(255*Math.min(Math.max(f, 0), 1));
     }
 
-    public void setmDuration(int mDuration){
+    public void setDuration(int mDuration){
         this.mDuration = mDuration;
         animator.setDuration(mDuration);
     }
