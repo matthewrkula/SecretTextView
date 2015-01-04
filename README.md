@@ -1,6 +1,8 @@
 SecretTextView
 ==============
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SecretTextView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1316)
+
 A TextView that simulates the effect from the app Secret where the characters fade in/out at different speeds.
 
 <img src="https://i.imgflip.com/95m91.gif"/>
