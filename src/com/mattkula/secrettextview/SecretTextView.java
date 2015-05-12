@@ -8,6 +8,8 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by matt on 5/27/14.
@@ -76,16 +78,22 @@ public class SecretTextView extends TextView {
 
     private void resetSpannableString(double percent){
     	mIsTextResetting = true;
-    	
+
         int color = getCurrentTextColor();
+        List<ForegroundColorSpan> spans = new ArrayList<>();
         for(int i=0; i < mSpannableString.length(); i++){
-            mSpannableString.setSpan(
-                    new ForegroundColorSpan(Color.argb(clamp(mAlphas[i] + percent), Color.red(color), Color.green(color), Color.blue(color))), i, i+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ForegroundColorSpan span = new ForegroundColorSpan(
+                Color.argb(clamp(mAlphas[i] + percent), Color.red(color), Color.green(color), Color.blue(color))
+            );
+            spans.add(span);
+            mSpannableString.setSpan(span, i, i+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         setText(mSpannableString);
         invalidate();
-        
+        for (ForegroundColorSpan span : spans) {
+            mSpannableString.removeSpan(span);
+        }
         mIsTextResetting = false;
     }
 
