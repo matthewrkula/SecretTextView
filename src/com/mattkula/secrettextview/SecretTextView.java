@@ -120,8 +120,8 @@ public class SecretTextView extends TextView {
         return (int)(255*Math.min(Math.max(f, 0), 1));
     }
 
-    public void setDuration(int mDuration){
-        this.mDuration = mDuration;
-        animator.setDuration(mDuration);
+    public void setDuration(int duration){
+        this.mDuration = duration;
+        animator.setDuration(duration);
     }
 }
