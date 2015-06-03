@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -17,6 +16,7 @@ public class SecretTextView extends TextView {
     private SpannableString mSpannableString;
 
     private double[] mAlphas;
+    private MutableForegroundColorSpan[] mSpans;
     private boolean mIsVisible;
     private boolean mIsTextResetting = false;
     private int mDuration = 2500;
@@ -78,13 +78,12 @@ public class SecretTextView extends TextView {
     	mIsTextResetting = true;
     	
         int color = getCurrentTextColor();
-        for(int i=0; i < mSpannableString.length(); i++){
-            mSpannableString.setSpan(
-                    new ForegroundColorSpan(Color.argb(clamp(mAlphas[i] + percent), Color.red(color), Color.green(color), Color.blue(color))), i, i+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        for (int i = 0; i < this.mTextString.length(); i++) {
+            MutableForegroundColorSpan span = mSpans[i];
+            span.setColor(Color.argb(clamp(mAlphas[i] + percent), Color.red(color), Color.green(color), Color.blue(color)));
         }
 
         setText(mSpannableString);
-        invalidate();
         
         mIsTextResetting = false;
     }
@@ -100,6 +99,12 @@ public class SecretTextView extends TextView {
         if (!mIsTextResetting){
             mTextString = getText().toString();
             mSpannableString = new SpannableString(this.mTextString);
+            mSpans = new MutableForegroundColorSpan[this.mTextString.length()];
+            for (int i = 0; i < this.mTextString.length(); i++) {
+                MutableForegroundColorSpan span = new MutableForegroundColorSpan();
+                mSpannableString.setSpan(span, i, i+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                mSpans[i] = span;
+            }
             resetAlphas(mTextString.length());
             resetSpannableString(mIsVisible ? 2.0f : 0);
         }
@@ -120,8 +125,8 @@ public class SecretTextView extends TextView {
         return (int)(255*Math.min(Math.max(f, 0), 1));
     }
 
-    public void setDuration(int mDuration){
-        this.mDuration = mDuration;
-        animator.setDuration(mDuration);
+    public void setDuration(int duration){
+        this.mDuration = duration;
+        animator.setDuration(duration);
     }
 }

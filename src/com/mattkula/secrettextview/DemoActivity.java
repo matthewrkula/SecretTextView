@@ -23,7 +23,7 @@ public class DemoActivity extends Activity {
         setContentView(R.layout.main);
 
         secretTextView = (SecretTextView)findViewById(R.id.textview);
-        secretTextView.setmDuration(3000);
+        secretTextView.setDuration(3000);
         secretTextView.setIsVisible(true);
         secretTextView.setOnClickListener(new View.OnClickListener() {
             @Override
